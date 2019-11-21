@@ -1,15 +1,15 @@
 {
-  "name": "open-diabetes-filter",
+  "name": "open-diabetes-vault-suite",
   "main": "./lib/index",
   "version": "0.0.0",
   "description": "Allows programming OpenDiabetesFilters using Google Blockly",
   "keywords": [],
   "deserializers": {
-    "open-diabetes-filter/EditorView": "deserializeEditor",
-    "open-diabetes-filter/PlotView": "deserializePlot",
-    "open-diabetes-filter/VaultView": "deserializeVault"
+    "open-diabetes-vault-suite/EditorView": "deserializeEditor",
+    "open-diabetes-vault-suite/PlotView": "deserializePlot",
+    "open-diabetes-vault-suite/VaultView": "deserializeVault"
   },
-  "repository": "https://github.com/Edgxxar/OpenDiabetes-Atom",
+  "repository": "https://github.com/OpenDiabetes/OpenDiabetesVault-Suite",
   "license": "AGPL-3.0",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

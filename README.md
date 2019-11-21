@@ -1,4 +1,4 @@
-# Open Diabetes Filter
+# OpenDiabetesVault-Suite
 This project provides a package for the [Atom](https://atom.io) text editor which allows for programming [OpenDiabetesFilters](https://github.com/Edgxxar/OpenDiabetesFilter) using [Google Blockly](https://developers.google.com/blockly/).
 
 ## Installation
@@ -59,7 +59,7 @@ You need to have [Git](https://git-scm.com/) and [NodeJS](https://nodejs.org/en/
 ## Settings
 To open the settings navigate to *Packages* > *Open Diabetes Filter* > *Settings* or press `ctrl`+`alt`+`l`.
 
-By default open-diabetes-filter will use the native ODV CLI and Plot generator executables that are shipped with this repository.
+By default open-diabetes-vault-suite will use the native ODV CLI and Plot generator executables that are shipped with this repository.
 If you want to use Docker, select the *Use Docker* checkbox in the settings. 
 If you want to use a custom ODV CLI or Plot generator, uncheck the *Use built-in ODV CLI* or *Use built-in Plot generator* checkboxes and specify the paths to your executables with the setting below the checkbox. 
 
