@@ -1,0 +1,285 @@
+{
+  "name": "open-diabetes-filter",
+  "main": "./lib/index",
+  "version": "0.0.0",
+  "description": "Allows programming OpenDiabetesFilters using Google Blockly",
+  "keywords": [],
+  "deserializers": {
+    "open-diabetes-filter/EditorView": "deserializeEditor",
+    "open-diabetes-filter/PlotView": "deserializePlot",
+    "open-diabetes-filter/VaultView": "deserializeVault"
+  },
+  "repository": "https://github.com/Edgxxar/OpenDiabetes-Atom",
+  "license": "AGPL-3.0",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "dockerode": "^2.5.8",
+    "etch": "^0.14.0",
+    "fast-csv": "^3.4.0",
+    "fs-extra": "^8.1.0",
+    "gunzip-file": "^0.1.1",
+    "lru-cache": "^5.1.1",
+    "md5-file": "^4.0.0",
+    "pdfjs-dist": "^2.0.943",
+    "slash": "^3.0.0",
+    "uuid": "^3.3.2",
+    "xml-js": "^1.6.11"
+  },
+  "configSchema": {
+    "cli": {
+      "title": "Open Diabetes Vault Command Line Interface",
+      "type": "object",
+      "properties": {
+        "executable": {
+          "title": "Executable Mode",
+          "description": "Use built-in executable, docker or a custom executable. Docker image `odv` needs to be installed for docker.",
+          "type": "string",
+          "default": "native",
+          "enum": [
+            "native",
+            "docker",
+            "custom"
+          ],
+          "order": 1
+        },
+        "docker-cleanup": {
+          "title": "Remove Docker Containers After Exection",
+          "description": "Remove Docker containers after they finished executing.",
+          "type": "boolean",
+          "default": true,
+          "order": 2
+        },
+        "custom": {
+          "title": "Custom ODV CLI",
+          "description": "Not used unless executable mode is set to *custom*. Path to your OpenDiabetesVault command line interface executable.",
+          "type": "string",
+          "default": "OpenDiabetesVault.jar",
+          "order": 3
+        },
+        "precompile": {
+          "title": "Filter Compilation",
+          "description": "If enabled filter processes will be compiled, using the compile command below, before being passed to the CLI.",
+          "type": "boolean",
+          "default": true,
+          "order": 4
+        }
+      },
+      "order": 2
+    },
+    "plot": {
+      "title": "Plotteria",
+      "type": "object",
+      "properties": {
+        "executable": {
+          "title": "Executable Mode",
+          "description": "Use built-in executable, docker or a custom executable. Docker image `plotteria` needs to be installed for docker.",
+          "type": "string",
+          "default": "native",
+          "enum": [
+            "native",
+            "docker",
+            "custom"
+          ],
+          "order": 1
+        },
+        "docker-cleanup": {
+          "title": "Remove Docker Containers After Exection",
+          "description": "Remove Docker containers after they finished executing.",
+          "type": "boolean",
+          "default": true,
+          "order": 2
+        },
+        "custom": {
+          "title": "Custom Plot Generator",
+          "description": "Not used unless executable mode is set to *custom*. Path to your plot executable.",
+          "type": "string",
+          "default": "plot.py",
+          "order": 3
+        },
+        "config-native": {
+          "title": "Use built-in plot config",
+          "description": "Use the built-in plot config.",
+          "type": "boolean",
+          "default": true,
+          "order": 4
+        },
+        "config-custom": {
+          "title": "Custom Plot Config",
+          "description": "Path to your plot config.",
+          "type": "string",
+          "default": "config.ini",
+          "order": 5
+        },
+        "cache-maxsize": {
+          "title": "Plot Cache maximum size",
+          "description": "Plots are cached for display. This value determines how many plots can be cached at once.",
+          "type": "integer",
+          "default": 100,
+          "minimum": 3,
+          "order": 6
+        },
+        "cache-preload": {
+          "title": "Plot Cache preload",
+          "description": "The application always caches the plots currently displayed. This value determines how many plots before and after that will be loaded in advance.",
+          "type": "integer",
+          "default": 5,
+          "minimum": 0,
+          "order": 7
+        }
+      },
+      "order": 3
+    },
+    "paths": {
+      "title": "System Paths",
+      "description": "Paths to your Java and Python binaries",
+      "type": "object",
+      "properties": {
+        "java": {
+          "title": "Java",
+          "description": "If java is in your path, you can leave this at default",
+          "type": "string",
+          "default": "java",
+          "order": 1
+        },
+        "javac": {
+          "title": "Java Compiler",
+          "description": "If javac is in your path, you can leave this at default",
+          "type": "string",
+          "default": "javac",
+          "order": 2
+        },
+        "python": {
+          "title": "Python 3",
+          "description": "If python is in your path, you can leave this at default",
+          "type": "string",
+          "default": "python",
+          "order": 3
+        }
+      },
+      "order": 4
+    },
+    "commands": {
+      "title": "Commands",
+      "description": "Commands are executed in Docker if enabled, or on your system.<br>The variables `java`, `javac` and `python` will be substituted with the corresponding paths defined above.<br>The variable `cli` will be substituted with the corresponding path to the ODV CLI executable.<br>The variables `plot` and `config` will be substituted with the corresponding paths to the plot generator and plot config.",
+      "type": "object",
+      "properties": {
+        "version": {
+          "title": "CLI version",
+          "description": "Used to check the version of your command line interface.",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" --version",
+          "order": 1
+        },
+        "init": {
+          "title": "ODV repository init",
+          "description": "Used to initialize an ODV repository.",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" init .",
+          "order": 2
+        },
+        "status": {
+          "title": "ODV repository status",
+          "description": "Used to load the repository status.",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" status",
+          "order": 3
+        },
+        "listtags": {
+          "title": "ODV tag list",
+          "description": "Used to get all tags of the current ODV repository.",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" tag -l",
+          "order": 4
+        },
+        "import": {
+          "title": "ODV data import",
+          "description": "Used to import data into your ODV repository.<br>**Arguments:**<br>`type`: import type<br>`files`: files to import",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" import -t %type% %files%",
+          "order": 5
+        },
+        "importslice": {
+          "title": "ODV slice import",
+          "description": "Used to create a tag from slice file.<br>**Arguments:**<br>`file`: slice file to import<br>`tag`: tag to use",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" tag -s \"%file%\" %tag%",
+          "order": 6
+        },
+        "export": {
+          "title": "ODV data export",
+          "description": "Used to export all data from your ODV repository.<br>**Arguments:**<br>`type`: import type",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" export -t %type%",
+          "order": 7
+        },
+        "exporttagged": {
+          "title": "ODV data export (tagged)",
+          "description": "Used to export data with the given tag from your ODV repository.<br>**Arguments:**<br>`type`: import type<br>`tag`: input tag",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" export -t %type% -i %tag%",
+          "order": 8
+        },
+        "compile": {
+          "title": "ODV filter compilation",
+          "description": "Used to compile ODV filter classes before execution<br>**Arguments:**<br>`file`: relative path to process container",
+          "type": "string",
+          "default": "\"%javac%\" -cp \"%cli%\" \"%file%\"",
+          "order": 9
+        },
+        "process": {
+          "title": "ODV filter process",
+          "description": "Used to execute filters.<br>**Arguments:**<br>`file`: relative path to process container<br>`out`: tag used for results",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" process -f \"%file%\" -o %out%",
+          "order": 10
+        },
+        "processtagged": {
+          "title": "ODV filter process",
+          "description": "Used to execute filters.<br>**Arguments:**<br>`file`: relative path to process container<br>`in`: tag used for input<br>`out`: tag used for results",
+          "type": "string",
+          "default": "\"%java%\" -jar \"%cli%\" process -f \"%file%\" -i %in% -o %out%",
+          "order": 11
+        },
+        "plotversion": {
+          "title": "Plot version",
+          "description": "Used to check the version of the plot executable.<br>**Arguments:**<br>`plot`: path to your plot executable",
+          "type": "string",
+          "default": "\"%python%\" \"%plot%\" --version",
+          "order": 12
+        },
+        "plot-daily": {
+          "title": "Plot generation (Daily Plots)",
+          "description": "Used to generate plots from data.<br>**Arguments:**<br>`file`: path to the data file<br>`out`: path to output directory",
+          "type": "string",
+          "default": "\"%python%\" \"%plot%\" -c \"%config%\" -f \"%file%\" -d -L -o \"%out%\"",
+          "order": 13
+        },
+        "plot-tiny": {
+          "title": "Plot generation (Tiny Slices)",
+          "description": "Used to generate plots from data.<br>**Arguments:**<br>`file`: path to the data file<br>`slice`: path to the slice file<br>`out`: path to output directory",
+          "type": "string",
+          "default": "\"%python%\" \"%plot%\" -c \"%config%\" -f \"%file%\" -t \"%slice%\" -L -o \"%out%\"",
+          "order": 14
+        },
+        "plot-normal": {
+          "title": "Plot generation (Normal Slices)",
+          "description": "Used to generate plots from data.<br>**Arguments:**<br>`file`: path to the data file<br>`slice`: path to the slice file<br>`out`: path to output directory",
+          "type": "string",
+          "default": "\"%python%\" \"%plot%\" -c \"%config%\" -f \"%file%\" -n \"%slice%\" -L -o \"%out%\"",
+          "order": 15
+        },
+        "plot-big": {
+          "title": "Plot generation (Big Slices)",
+          "description": "Used to generate plots from data.<br>**Arguments:**<br>`file`: path to the data file<br>`slice`: path to the slice file<br>`out`: path to output directory",
+          "type": "string",
+          "default": "\"%python%\" \"%plot%\" -c \"%config%\" -f \"%file%\" -b \"%slice%\" -L -o \"%out%\"",
+          "order": 16
+        }
+      },
+      "order": 5
+    }
+  }
+}
