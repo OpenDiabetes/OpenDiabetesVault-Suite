@@ -1,0 +1,307 @@
+// The ui-variables file is provided by base themes provided by Atom.
+//
+// See https://github.com/atom/atom-dark-ui/blob/master/styles/ui-variables.less
+// for a full listing of what's available.
+@import "ui-variables";
+
+// editor
+
+.odf-editor {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+.blockly-area {
+  flex: 1;
+}
+
+.blockly-div {
+  position: absolute;
+}
+
+.odf-output {
+  height: 300px;
+  background-color: @tool-panel-background-color;
+}
+
+.odf-code {
+  width: 100%;
+  height: 100%;
+  resize: none;
+  color: black;
+}
+
+// modals
+
+.modal-outer {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  width: 100%;
+  max-width: 100em;
+}
+
+.modal-inner {
+  left: -50% !important;
+  border-bottom: 0;
+}
+
+.modal-title {
+  margin-top: 0;
+}
+
+.btn-modal {
+  margin-top: 10px;
+}
+
+// plot
+
+.odf-toolbar {
+  margin: 10px;
+  background-color: @tool-panel-background-color;
+}
+
+.plot-canvas {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.canvas-url-selected {
+  color: @text-color-selected;
+}
+
+.canvas-url {
+  color: @text-color-subtle;
+}
+
+// radio buttons
+
+.checklist-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.checklist-item {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  margin: 6px 20px 6px 0;
+  user-select: none;
+  cursor: pointer;
+}
+
+.checklist-item input {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  cursor: pointer;
+}
+
+.checklist-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: @button-background-color;
+  border-radius: 50%;
+}
+
+.checklist-item:hover input ~ .checklist-mark {
+  background-color: @button-background-color-hover;
+}
+
+.checklist-item input:checked ~ .checklist-mark {
+  background-color: @button-background-color-selected;
+}
+
+.checklist-mark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checklist-item input:checked ~ .checklist-mark:after {
+  display: block;
+}
+
+.checklist-item .checklist-mark:after {
+  top: 4px;
+  left: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: @button-background-color-hover;
+}
+
+// input type file
+
+.input-file {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.input-file + label {
+  background-color: @input-background-color;
+  border: 1px solid @text-color-subtle;
+  border-radius: 3px;
+  color: @text-color-highlight;
+  padding: 0 0.8em;
+  font-size: 1em;
+  line-height: 2em;
+  vertical-align: bottom;
+}
+
+.input-file + label:hover {
+  background-color: @background-color-highlight;
+}
+
+// input tag
+
+.input-tag {
+  padding: 0 .4em;
+  border: 1px solid @text-color-subtle;
+  border-radius: 3px;
+  background-color: @input-background-color;
+}
+
+.input-tag > input {
+  margin: 1px 0 0 5px;
+  vertical-align: top;
+  width: 70px;
+  padding: .25em 0;
+  color: @text-color-highlight;
+  border: 0;
+  background-color: @input-background-color;
+}
+
+.input-tag > input:disabled {
+  cursor: not-allowed;
+  color: @text-color;
+}
+
+.input-tag > .icon::before {
+  margin: 3px 0 0 3px;
+  color: @text-color-highlight;
+}
+
+.tag-list {
+  display: none;
+  position: absolute;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 3px;
+  max-height: 200px;
+  padding: .375em;
+  background-color: @base-background-color;
+}
+
+.tag-list > .list-group > li {
+  padding: 0 .4em;
+  cursor: pointer;
+}
+
+.tag-list > .list-group > li:hover {
+  background-color: @background-color-selected;
+}
+
+// input page plot toolbar
+
+.input-page {
+  max-height: 26px;
+  vertical-align: initial;
+  padding: 0 .4em;
+  border: 0;
+}
+
+// output divs for child processes
+
+.process-output {
+  overflow: auto;
+  height: 300px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: @input-background-color;
+  border: 1px solid @input-border-color;
+  border-radius: 5px;
+}
+
+// icons
+
+.icon-right::before {
+  margin-left: 5px;
+  margin-right: 0;
+}
+
+.icon-left::before {
+  margin-left: 0;
+  margin-right: 5px;
+}
+
+.btn.icon-xs::before {
+  margin-right: 0;
+  font-size: 12px;
+  width: 12px;
+  height: 12px;
+  vertical-align: 0;
+}
+
+.btn.icon-s::before {
+  margin-right: 0;
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  vertical-align: -0.1em;
+}
+
+.btn.icon-m::before {
+  margin-right: 0;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  vertical-align: -0.2em;
+}
+
+.btn-dummy {
+  cursor: default;
+  box-shadow: none;
+}
+
+.btn-dummy:hover {
+  background-image: none !important;
+}
+
+.btn-info.btn-dummy:active {
+  background: @background-color-info !important;
+}
+
+.mb-1 {
+  margin-bottom: 5px;
+}
+
+.mt-2 {
+  margin-top: 10px;
+}
+
+.m-2 {
+  margin: 10px;
+}
+
+// progress
+
+progress {
+  margin-right: 5px;
+}
+
+// reapply border radius for file input label in button groups
+.btn-group > .input-file:first-child + label.btn:nth-child(2) {
+  border-top-left-radius: 3px !important;
+  border-bottom-left-radius: 3px !important;
+}

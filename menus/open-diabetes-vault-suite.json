@@ -1,0 +1,50 @@
+{
+  "context-menu": {
+    "atom-workspace": [
+      {
+        "label": "Open new ODV Filter Editor",
+        "command": "open-diabetes-vault-suite:editor"
+      },
+      {
+        "label": "Open new ODV Plot Window",
+        "command": "open-diabetes-vault-suite:plot"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "OpenDiabetesVault-Suite",
+          "submenu": [
+            {
+              "label": "Open ODV Repository",
+              "command": "open-diabetes-vault-suite:vault"
+            },
+            {
+              "label": "Open new ODV Filter Editor",
+              "command": "open-diabetes-vault-suite:editor"
+            },
+            {
+              "label": "Open new ODV Plot Window",
+              "command": "open-diabetes-vault-suite:plot"
+            },
+            {
+              "label": "Manually Initialize Repository",
+              "command": "open-diabetes-vault-suite:initialize-repository"
+            },
+            {
+              "label": "Open Settings",
+              "command": "open-diabetes-vault-suite:settings"
+            },
+            {
+              "label": "Check Settings",
+              "command": "open-diabetes-vault-suite:check-settings"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
