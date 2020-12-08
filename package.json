@@ -18,7 +18,7 @@
     "child_process": "^1.0.2",
     "dockerode": "^2.5.8",
     "etch": "^0.14.0",
-    "fast-csv": "^3.4.0",
+    "fast-csv": "^4.3.6",
     "fs-extra": "^8.1.0",
     "gunzip-file": "^0.1.1",
     "lru-cache": "^5.1.1",
