@@ -23,7 +23,7 @@
     "gunzip-file": "^0.1.1",
     "lru-cache": "^5.1.1",
     "md5-file": "^4.0.0",
-    "pdfjs-dist": "^2.0.943",
+    "pdfjs-dist": "^2.16.105",
     "slash": "^3.0.0",
     "uuid": "^3.3.2",
     "xml-js": "^1.6.11"
